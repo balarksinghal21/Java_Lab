@@ -1,0 +1,88 @@
+package hack.big;
+import java.io.*;
+import java.util.Scanner;
+
+public class Bigger {
+
+		
+		
+			public static void nextPermutation(int[] nums) {
+		        int n = nums.length;
+		        int last = n-1;
+		        if(n<=1)
+		            return;
+		        while(last>0 && nums[last]<=nums[last-1]){
+		            last--;
+		        }
+		        if(last == 0){
+		            // Arrays.sort(nums);
+		            reverse(nums , 0);
+		            return;
+		        }
+		        
+		        // int num = -1;
+		        int i;
+		        for(i=n-1;i>=0;i--){
+		            if(nums[i]>nums[last-1])
+		                break;
+		        }
+		        
+		        
+		        int x = nums[i];
+		        nums[i] = nums[last-1];
+		        nums[last-1] = x;
+		        
+		        reverse(nums , last);
+		        
+		        // return nums;
+		        
+		    }
+		    
+		    public static void reverse(int a[] , int start){
+		        int i = start;
+		        int j = a.length-1;
+		        while(i<j){
+		            int x = a[i];
+		            a[i] = a[j];
+		            a[j] = x;
+		            i++;
+		            j--;
+		        }
+		    }
+
+			public static void main(String[] args) {
+				Scanner sc = new Scanner(System.in);
+				System.out.print("How many inputs? ");    
+
+				PrintWriter out = new PrintWriter(System.out);
+				int t = sc.nextInt();
+				while(t-- != 0) {
+					char[] arr = sc.next().toCharArray();
+					int n = arr.length;
+					int num[] = new int[n];
+					for(int i=0; i<n; i++) {
+						num[i] = arr[i] - 'a'+1;
+					}
+					nextPermutation(num);
+					if(sorted(num)) {
+						out.println(-1);
+					}
+					else {
+						StringBuilder ans = new StringBuilder();
+						for(int e : num)ans.append((char)(e+'a'-1));
+						out.println(ans);
+					}
+				}
+				out.close();
+			}
+
+			private static boolean sorted(int[] arr) {
+				for(int i=0; i<arr.length-1; i++) {
+					if(arr[i] > arr[i+1]) {
+						return false;
+					}
+				}
+				return true;
+			}	
+	}
+
